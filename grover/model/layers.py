@@ -432,7 +432,7 @@ class Head(nn.Module):
                                 hidden_size=hidden_size,
                                 bias=args.bias,
                                 depth=args.depth,
-                                dropout=args.dropout,
+                                dropout=0.1,
                                 undirected=args.undirected,
                                 dense=args.dense,
                                 aggregate_to_atom=False,
@@ -446,7 +446,7 @@ class Head(nn.Module):
                                 hidden_size=hidden_size,
                                 bias=args.bias,
                                 depth=args.depth,
-                                dropout=args.dropout,
+                                dropout=0.1,
                                 undirected=args.undirected,
                                 dense=args.dense,
                                 aggregate_to_atom=False,
@@ -460,7 +460,7 @@ class Head(nn.Module):
                                 hidden_size=hidden_size,
                                 bias=args.bias,
                                 depth=args.depth,
-                                dropout=args.dropout,
+                                dropout=0.1,
                                 undirected=args.undirected,
                                 dense=args.dense,
                                 aggregate_to_atom=False,
@@ -737,7 +737,7 @@ class GTransEncoder(nn.Module):
         self.act_func_node = get_activation_function(self.activation)
         self.act_func_edge = get_activation_function(self.activation)
 
-        self.dropout_layer = nn.Dropout(p=args.dropout)
+        self.dropout_layer = nn.Dropout(p=0.1)
 
     def pointwise_feed_forward_to_atom_embedding(self, emb_output, atom_fea, index, ffn_layer):
         """

@@ -37,7 +37,7 @@ class GROVEREmbedding(nn.Module):
                                           hidden_size=args.hidden_size,
                                           edge_fdim=edge_dim,
                                           node_fdim=node_dim,
-                                          dropout=args.dropout,
+                                          dropout=0.1,
                                           activation=args.activation,
                                           num_mt_block=args.num_mt_block,
                                           num_attn_head=args.num_attn_head,
@@ -408,7 +408,7 @@ class GroverFinetuneTask(nn.Module):
             else:
                 first_linear_dim = args.hidden_size + args.features_dim
 
-        dropout = nn.Dropout(args.dropout)
+        dropout = nn.Dropout(0.1)
         activation = get_activation_function(args.activation)
         # TODO: ffn_hidden_size
         # Create FFN layers
