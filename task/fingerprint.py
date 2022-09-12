@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 from grover.data import MolCollator
 from grover.data import MoleculeDataset
 from grover.util.utils import get_data, create_logger, load_checkpoint
-
+import pandas as pd 
 
 def do_generate(model: nn.Module,
                 data: MoleculeDataset,
@@ -64,6 +64,7 @@ def generate_fingerprints(args: Namespace, logger: Logger = None) -> List[List[f
                          use_compound_names=False,
                          max_data_size=float("inf"),
                          skip_invalid_smiles=False)
+    smiles_df = pd.read_csv("/data/vss2134/pgx_pdc/data/ALL_cpdid2smiles.csv")
     test_data = MoleculeDataset(test_data)
 
     logger.info(f'Total size = {len(test_data):,}')
@@ -76,4 +77,4 @@ def generate_fingerprints(args: Namespace, logger: Logger = None) -> List[List[f
         args=args
     )
 
-    return model_preds
+    return model_preds, smiles_df

@@ -1,5 +1,5 @@
 import random
-
+import pickle
 import numpy as np
 import torch
 from rdkit import RDLogger
@@ -47,8 +47,16 @@ if __name__ == '__main__':
     elif args.parser_name == 'fingerprint':
         train_args = get_newest_train_args()
         logger = create_logger(name='fingerprint', save_dir=None, quiet=False)
-        feas = generate_fingerprints(args, logger)
-        np.savez_compressed(args.output_path, fps=feas)
+        feas, smiles_df = generate_fingerprints(args, logger)
+        feas = torch.tensor(feas)
+        print((feas.shape[0] , smiles_df.shape[0]))
+        assert feas.shape[0] == smiles_df.shape[0]
+       
+        for i in range(feas.shape[0]):
+            outfile = f"/data/vss2134/pgx_pdc/data/drug_embeddings/grover_node/{smiles_df['cpd_id'].iloc[i]}.pickle"
+            with open(outfile, 'wb+') as ofl:
+                pickle.dump(feas[i], ofl )
+                
     elif args.parser_name == 'predict':
         train_args = get_newest_train_args()
         avg_preds, test_smiles = make_predictions(args, train_args)
